@@ -1,0 +1,17 @@
+Inspection path planner version 1.0.0
+Scenario:
+Number of facets:	0
+Number of obstacles:	0
+Space center:		(0, 0, 3333)
+Space size:		(20000, 20000, 20000)
+Starting point:		(1000, 1000, 1000)
+Final point:		(1000, 1000, 1000)
+Angle of incidence:	0.523599rad
+Range:			(40, 800)m
+Number of iterations:	20
+Linear speed:		0.25m/s
+Yaw rate:		0.5rad/s
+Field of view [h,v]:	[2.0944, 2.0944]rad
+Camera pitch:		0.436332rad
+
+-->Too few inspection areas specified. A minium number of 4 is required, where only 1 are given.

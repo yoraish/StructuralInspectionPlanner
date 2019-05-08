@@ -19,7 +19,7 @@ std::vector<nav_msgs::Path> * readSTLfile(std::string name);
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "sample_cliff");//"hoa_hakanaia");
+  ros::init(argc, argv, "big");//"hoa_hakanaia");
   ROS_INFO("Requester is alive");
   if (argc != 1)
   {
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
   srv.request.numIterations = 20;
 
   /* read STL file and publish to rviz */
-  std::vector<nav_msgs::Path> * mesh = readSTLfile(ros::package::getPath("request")+"/meshes/sample_cliff.stl");//hoa_hakanaia.stl");
+  std::vector<nav_msgs::Path> * mesh = readSTLfile(ros::package::getPath("request")+"/meshes/big.stl");//hoa_hakanaia.stl");
   ROS_INFO("mesh size = %i", (int)mesh->size());
   for(std::vector<nav_msgs::Path>::iterator it = mesh->begin(); it != mesh->end() && ros::ok(); it++)
   {
@@ -106,7 +106,8 @@ int main(int argc, char **argv)
     /* writing results of scenario to m-file. use supplied script to visualize */
     std::fstream pathPublication;
     std::string pkgPath = ros::package::getPath("request");
-    pathPublication.open((pkgPath+"/visualization/inspectionScenario.m").c_str(), std::ios::out);
+    // path being saved to this file:
+    pathPublication.open((pkgPath+"/visualization/inspectionScenario_cliff3.m").c_str(), std::ios::out);
     if(!pathPublication.is_open())
     {
       ROS_ERROR("Could not open 'inspectionScenario.m'! Inspection path is not written to file");
@@ -115,8 +116,11 @@ int main(int argc, char **argv)
     pathPublication << "inspectionPath = [";
     for(std::vector<geometry_msgs::PoseStamped>::iterator it = srv.response.inspectionPath.poses.begin(); it != srv.response.inspectionPath.poses.end(); it++)
     {
+
+
       tf::Pose pose;
       tf::poseMsgToTF(it->pose, pose);
+
       double yaw_angle = tf::getYaw(pose.getRotation());
       pathPublication << it->pose.position.x << ", " << it->pose.position.y << ", " << it->pose.position.z << ", 0, 0, " << yaw_angle << ";\n";
     }

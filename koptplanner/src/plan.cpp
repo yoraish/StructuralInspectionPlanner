@@ -441,6 +441,7 @@ bool plan(koptplanner::inspection::Request  &req,
   while(!ros::isShuttingDown() && koptPlannerIteration < req.numIterations)
   {
     ROS_INFO("STARTING ITERATION %i", koptPlannerIteration);
+
     plannerLog.open((pkgPath+"/data/report.log").c_str(), std::ios::app | std::ios::out);
     if(!plannerLog.is_open())
       ROS_ERROR("Could not open report.log");
@@ -563,6 +564,8 @@ bool plan(koptplanner::inspection::Request  &req,
     
     if(koptError != SUCCESSFUL)
     {
+      ROS_INFO("the error is");
+
       ROS_ERROR("Error occured! ID: %i", koptError);
       return koptError == SUCCESSFUL;
     }
