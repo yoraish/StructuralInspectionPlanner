@@ -19,7 +19,16 @@ std::vector<nav_msgs::Path> * readSTLfile(std::string name);
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "big");//"hoa_hakanaia");
+  /*
+  ===========================
+  ===========================
+  *  CHANGE THIS WHEN USING *
+  *  A NEW MESH             *
+  *  MESH NAME (not path)
+  ===========================
+  ===========================
+  */
+  ros::init(argc, argv, "sample_cliff_reduced");
   ROS_INFO("Requester is alive");
   if (argc != 1)
   {
@@ -36,7 +45,15 @@ int main(int argc, char **argv)
   ros::Rate r2(1.0);
   r2.sleep();
 
-  /* define the bounding box */
+  /*
+  ===========================
+  ===========================
+  *  CHANGE THIS WHEN USING *
+  *  A NEW MESH             *
+  *  BOUNDING BOX
+  ===========================
+  ===========================
+  */
   koptplanner::inspection srv;
   srv.request.spaceSize.push_back(20000);
   srv.request.spaceSize.push_back(20000);
@@ -46,7 +63,15 @@ int main(int argc, char **argv)
   srv.request.spaceCenter.push_back(3333.0);
   geometry_msgs::Pose reqPose;
 
-  /* starting pose */
+  /*
+  ===========================
+  ===========================
+  *  CHANGE THIS WHEN USING *
+  *  A NEW MESH             *
+  *  START POSE
+  ===========================
+  ===========================
+  */
   reqPose.position.x = 1000.0;
   reqPose.position.y = 1000.0;
   reqPose.position.z = 1000.0;
@@ -57,7 +82,15 @@ int main(int argc, char **argv)
   reqPose.orientation.w = q.w();
   srv.request.requiredPoses.push_back(reqPose);
 
-  /* final pose (remove if no explicit final pose is desired) */
+  /*
+  ===========================
+  ===========================
+  *  CHANGE THIS WHEN USING *
+  *  A NEW MESH             *
+  *  FINAL POSE
+  ===========================
+  ===========================
+  */
   reqPose.position.x = 1000.0;
   reqPose.position.y = 1000.0;
   reqPose.position.z = 1000;
@@ -68,6 +101,16 @@ int main(int argc, char **argv)
   reqPose.orientation.w = q.w();
   srv.request.requiredPoses.push_back(reqPose);
 
+  /*
+  ===========================
+  ===========================
+  *  CHANGE THIS WHEN USING *
+  *  A NEW MESH             *
+  *  DISTANCE RANGE FROM 
+  *  SURFACE
+  ===========================
+  ===========================
+  */
   /* parameters for the path calculation (such as may change during mission) */
   srv.request.incidenceAngle = M_PI/6.0;
   srv.request.minDist = 40.0;
@@ -75,7 +118,20 @@ int main(int argc, char **argv)
   srv.request.numIterations = 20;
 
   /* read STL file and publish to rviz */
-  std::vector<nav_msgs::Path> * mesh = readSTLfile(ros::package::getPath("request")+"/meshes/big.stl");//hoa_hakanaia.stl");
+  /*
+  ===========================
+  ===========================
+  *  CHANGE THIS WHEN USING *
+  *  A NEW MESH             *
+  *  MESH PATH
+  *  if follwing conventional
+  *  mesh folder, then just
+  *  change the name of the
+  *  file
+  ===========================
+  ===========================
+  */
+  std::vector<nav_msgs::Path> * mesh = readSTLfile(ros::package::getPath("request")+"/meshes/sample_cliff_reduced.stl");
   ROS_INFO("mesh size = %i", (int)mesh->size());
   for(std::vector<nav_msgs::Path>::iterator it = mesh->begin(); it != mesh->end() && ros::ok(); it++)
   {
